@@ -1,0 +1,44 @@
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<title>Password Reset Page</title>
+{% load staticfiles %}
+<link rel="icon" href="{% static 'nitn_logo.png' %}" type="image" sizes="16x16">
+<link rel="stylesheet" type="text/css" href="{% static 'password_reset/reset_pass.css' %}">
+<style>
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;}
+input[type="number"] {-moz-appearance: textfield;}
+</style>
+<script>
+	if ({{flag}}){
+		alert({{message}})
+	}
+</script>
+<script>
+<!-- to prevent the key strokes -->
+document.onkeydown = function(e) {
+if(event.keyCode == 123) {return false;}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){return false;}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){return false;}
+if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){return false;}
+}
+</script>
+</head>
+<!-- preventing the right click menu -->
+<body oncontextmenu="return false;" background="{% static 'banner.jpg' %}">
+ 
+<div class="main">
+	<form method = "POST" enctype="application/x-www-form-urlencoded" action="">{% csrf_token %}
+			<input class="sub" required type="number" name="stud_id" min="2014101100" placeholder="Enter your registration number" min="2014101100">
+			<input class="sub" required type="email" name="usermail" placeholder="Enter your email addess">
+			<input class="sub" required type="tel" name="student_no" id="student_no" placeholder="Enter your Mobile No.">
+			<span class="sub"style="color:white;">Security Question:- {{question}}</span>
+			<input class="sub" type="number" name="answer" required min="0" max ="81" placeholder="result?">
+			<input class="sub" style="border:none;font-size:1.1em;color:white;background:midnightblue" type="submit">
+	</form>
+</div>
+</body>
+</html>

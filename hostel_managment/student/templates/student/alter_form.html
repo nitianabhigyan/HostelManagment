@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+{% block content %}
+	<title>Edit Information</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load staticfiles %}
+	<link rel="icon" type="image/png" href="{% static 'nitn_icon.png' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'student/css/main_edit_form.css' %}">
+</head>
+
+<body>
+
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+			<form class="contact100-form validate-form" method ="POST" onsubmit="return verify()" enctype="application/x-www-form-urlencoded">{% csrf_token %}
+				<span class="contact100-form-title">
+					Correction Form
+				</span>
+				<div class="input100">Note:- All fields are optional<br>If you want to edit any other information kindly contact the Warden.</div>
+				<br>
+				<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+					<span class="label-input100">Full Name</span>
+					<input class="input100" type="text" name="name" value="{{student.student_name}}" placeholder="Enter Your Name">
+				</div>
+
+				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100">
+					<span class="label-input100">Email</span>
+					<input class="input100" type="email" name="email" value="{{student.email_id}}" placeholder="Enter Your Email ">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Your Mobile Number<strong>(add +91)</strong></span>
+					<input class="input100" type="tel" value="{{student.contact_no}}" name="student_no" placeholder="Enter Number Phone">
+				</div>
+
+				<div class="wrap-input100 input100-select bg1">
+					<span class="label-input100"> Hostel</span>
+					<div>
+						<select class="js-select2" id="select_hostel" name="hostel" style="display: flex;align-items: center;background-color: #f7f7f7;border: none;
+height: 40px;width:100%;outline: none;font-family: Montserrat-SemiBold;font-size: 18px;position: relative;">
+							<!-- put the prev hostel name as "selected" using js and jinja-->
+							<option value='Japfu'>Japfu</option>
+							<option value="PatkaiA">Patkai-A</option>
+							<option value="PatkaiB">Patkai-B</option>
+							<option value="PatkaiC">Patkai-C</option>
+							<option value="Tiyi">Tiyi</option>
+							<option value="Duzukou">Duzukou</option>
+							<option value="Zanibu">Zanibu</option>
+							<option value="Saramati-A">Saramati-A</option>
+							<option value="Saramati-B">Saramati-B</option>
+							<option value="Saramati-C">Saramati-C</option>
+							<option value="New-Hostel">New-Hostel</option>	
+						</select>
+					</div>
+					<script>
+							var x = document.getElementById("select_hostel");
+							for (var i = 0; i < x.options.length;i++){
+								//works.
+								if (x.options[i].value == '{{student.hostel_name}}'){ //to be set by jinja
+									x.options[i].selected = true;
+									break;
+								}}
+					</script>
+				</div>
+
+				<div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Message">
+					<span class="label-input100">Current Semester</span>
+						<select class="js-select2" id="select_semester" name="semester">
+							<option value="1">I</option>
+							<option value="2">II</option>
+							<option value="3">III</option>
+							<option value="4">IV</option>
+							<option value="5">V</option>
+							<option value="6">VI</option>
+							<option value="7">VII</option>
+							<option value="8">VIII</option>
+						</select>
+						<script>
+							var x = document.getElementById("select_semester");
+							for (var i = 0; i < x.options.length;i++){
+								//works.
+								if (x.options[i].value == '{{student.semester}}'){ //to be set by jinja
+									x.options[i].selected = true;
+									break;
+								}}
+						</script>
+				</div>
+				
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Enter your password</span>
+					<input class="input100" type="password" required name="password" placeholder="Enter your password">
+				</div>
+				
+				<div class="container-contact100-form-btn">
+					<button class="contact100-form-btn">
+						<span>Submit<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i></span>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script>
+	function verify(){
+	//we get the values in the form out of 0 index in the forms[] arr since it's the only form in document
+	var form = document.forms[0];
+		msg = "Please Verify the Information you Entered: \n\n Name: " + form.name.value + "\n Email: " + form.email.value +"\n Mobile Number: "+ form.student_no.value + "\n Hostel: " + form.select_hostel.value + "\n If this information is correct, click 'OK' \n Click 'Cancel' to change"
+		return confirm(msg);
+	}</script>
+{% endblock %}
+<script>
+if ({{flag}}){
+	alert("{{message}}");
+	}
+</script>
+</body>
+</html>

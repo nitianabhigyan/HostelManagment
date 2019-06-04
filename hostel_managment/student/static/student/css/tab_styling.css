@@ -1,0 +1,44 @@
+	/* Style the tab */
+	.tab {
+		
+		/*border: 3px solid gray; */
+		background-color: #1f144c;
+		width: auto;
+		height: 100%;
+	}
+	/* Style the buttons inside the tab */
+	.tab button {
+		display: block;
+		background-color: inherit;
+		color: #ffffff;
+		padding: 22px 16px;
+		width: 100%;
+		border-color: violet;
+		outline: none;
+		text-align: left;
+		cursor: pointer;
+		transition: 0.3s;
+		font-size: 17px;
+	}
+	/* Change background color of buttons on hover */
+	.tab button:hover {
+		display: block;
+		background-color: white;
+		color: black;
+		font-size: 17px;
+		
+	}
+	/* Create an active/current "tab button" class */
+	.tab button.active {
+		background-color: #f3f3f1;
+		color: midnightblue;
+	}
+	/* Style the tab content */
+	.tabcontent {
+		float: left;
+		padding: 0px 12px;
+		width: 80%;
+		border-left: none;
+		margin-top: 30px;		
+		display: none;
+	}

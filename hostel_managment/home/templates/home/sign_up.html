@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+{% block content %}
+<html lang="en">
+<head>
+	<title>Sign Up Page</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load staticfiles %}
+<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="{% static 'signupform/images/icons/favicon.ico' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="{% static 'signupform/vendor/daterangepicker/daterangepicker.css' %}"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'signupform/css/main.css' %}">
+<!--===============================================================================================-->
+<style>
+
+.container-contact100 {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+/*  background: #a64bf4; */
+  background-image: url("{% static 'banner.jpg' %}");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; 
+/*  background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff); */
+  background: -o-linear-gradient(45deg, #00dbde, #fc00ff);
+  background: -moz-linear-gradient(45deg, #00dbde, #fc00ff);
+/*  background: linear-gradient(45deg, #00dbde, #fc00ff); */
+}
+/*[ Contact ]*/
+
+.wrap-contact100 {
+  width: 500px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 42px 55px 45px 55px;
+  opacity:.94;
+}
+
+/* showing and hiding passwords */
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+.form-control {
+    border: 0px solid rgba(0,0,0,.15);
+}
+</style>
+<script>
+document.onkeydown = function(e) {
+if(event.keyCode == 123) {
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+return false;
+}
+}
+
+</script>
+</head>
+<body oncontextmenu="return false;">
+	<div class="container-contact100">
+		<div class="wrap-contact100">
+		
+			<form class="contact100-form validate-form" method="POST" action="" enctype="multipart/form-data">
+			{% csrf_token %}
+				<span class="contact100-form-title">
+					<u>Student</u> <u>Registration</u> <u>Form</u>
+				</span>
+				
+				<div class="wrap-input100 validate-input" data-validate="Name is required">
+					<span class="label-input100">Your Name</span>
+					<input class="input100" required type="text" name="name" placeholder="Enter your name">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate="Registration number is required">
+					<span class="label-input100">Your Registration number</span>
+					<input class="input100" required type="number" name="regn_no" min="2014101100" step="1" placeholder="Enter your registration number">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Branch Name</span>
+					<div>
+						<select class="selection-2" name="branch" >
+							<option value="CSE">C.S.E.</option>
+							<option value="CE">Civil E.</option>
+							<option value="ECE.">E.C.E.</option>
+							<option value="EEE">E.E.E.</option>
+							<option value="EIE">E.I.E.</option>
+							<option value="BSMS">B.S.M.S.</option>
+							<option value="ME">M.E.</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+					<span class="label-input100">Email</span>
+					<input class="input100" required type="email" name="usermail" placeholder="Enter your email addess">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Current Hostel</span>
+					<div>
+						<select class="selection-2" name="hostel">
+							<option value='Japfu' style="font-size:15px;font-family:'Alice', Verdana, serif;font-style:italic">Japfu</option>
+							<option value="PatkaiA">Patkai-A</option>
+							<option value="PatkaiB">Patkai-B</option>
+							<option value="PatkaiC">Patkai-C</option>
+							<option value="Tiyi">Tiyi</option>
+							<option value="Duzukou">Duzukou</option>
+							<option value="Zanibu">Zanibu</option>
+							<option value="Saramati-A">Saramati-A</option>
+							<option value="Saramati-B">Saramati-B</option>
+							<option value="Saramati-C">Saramati-C</option>
+							<option value="New-Hostel">New-Hostel</option>							
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate="Contact number is required">
+					<span class="label-input100">Your Mobile Number(add +91)</span>
+					<input class="input100" type="tel" id="student_no" required name="student_no" placeholder="Enter your Mobile no. WITH COUNTRY CODE (+91)">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 input100-select">
+					<span class="label-input100">Current Semester</span>
+					<div>
+						<select class="selection-2" name="semester">
+							<option value="1">I</option>
+							<option value="2">II</option>
+							<option value="3">III</option>
+							<option value="4">IV</option>
+							<option value="5">V</option>
+							<option value="6">VI</option>
+							<option value="7">VII</option>
+							<option value="8">VIII</option>
+						</select>
+					</div>
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate="Age is required">
+					<span class="label-input100">Your Age</span>
+					<input class="input100" type="number" required min="15" max="100" name="age" placeholder="Enter your age">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate="Guardian Contact number is required">
+					<span class="label-input100">Your Guardian's Mobile Number</span>
+					<input class="input100" type="tel" id="guardian_no" required name="guardian_no" placeholder="Guardian's No. with +91">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate="Photo is required">
+					<span class="label-input100">Your Photo please</span>
+					<input class="input100" required type="file" name="photo" accept="image/*" placeholder="upload your photo">
+					<span class="focus-input100"></span>
+				</div>
+				
+				
+				<div class="wrap-input100 validate-input" data-validate = "Message is required">
+					<span class="label-input100">Permanent Address</span>
+					<input type="textarea" class="input100" name="address" placeholder="Your address here..."></textarea>
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<span class="label-input100">Your Password</span>
+					<input class="form-control" minlength=8 id="password" required type="password" name="password" placeholder="Enter the password you want">
+					<span toggle="#password-field" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+					<span class="focus-input100"></span>
+				</div>
+				
+								<div class="wrap-input100 validate-input" data-validate="Password is required">
+					<span class="label-input100">Re Enter Password</span>
+					<input class="input100" required id="confirm_password" type="password" name="confirm_password" placeholder="Confirm your password">
+					<span class="focus-input100"></span>
+				</div>
+				
+				<div class="container-contact100-form-btn">
+					<div class="wrap-contact100-form-btn">
+						<div class="contact100-form-bgbtn"></div>
+						<button class="contact100-form-btn" type="submit">
+							<span>
+								Submit
+								<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+							</span>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div id="dropDownSelect1"></div>
+	
+	
+<!--===============================================================================================-->	
+	<script>
+	var password = document.getElementById("password")
+  , confirm_password = document.getElementById("confirm_password");
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+
+var student_no = document.getElementById("student_no")
+  , guardian_no = document.getElementById("guardian_no");
+
+function validateno(){
+  if(student_no.value == guardian_no.value) {
+    guardian_no.setCustomValidity("Guardian contact No. & Student's Shouldn't Match");
+  } else {
+    guardian_no.setCustomValidity('');
+  }
+}
+
+student_no.onchange = validateno;
+guardian_no.onkeyup = validateno;
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'signupform/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'signupform/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'signupform/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'signupform/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'signupform/vendor/select2/select2.min.js' %}"></script>
+	<script>
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+var flag = 1;
+$(".toggle-password").click(function() {
+	$(this).toggleClass("fa-eye-slash fa-eye");
+	var input = $($(this).attr("toggle"));
+	var x = document.getElementById("password");
+	 if (flag == 0){
+		flag = 1;
+		x.setAttribute("type", "password");
+	 }
+	 else {
+		flag = 0;
+		x.setAttribute("type", "text");
+	 }
+});
+
+		
+	</script>
+<!--===============================================================================================
+	<script src="signupform/vendor/daterangepicker/moment.min.js"></script>
+	<script src="signupform/vendor/daterangepicker/daterangepicker.js"></script>
+	===============================================================================================
+	<script src="signupform/vendor/countdowntime/countdowntime.js"></script>
+    ===============================================================================================-->
+	<script src="{% static 'signupform/js/main.js' %}"></script>
+	
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,50 @@
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+{% load staticfiles %}
+	<title>Password Reset Confirmation</title>
+	<link rel="icon" href="{% static 'nitn_logo.png' %}" type="image" sizes="16x16">
+	<link rel="stylesheet" type="text/css" href="{% static 'password_reset/reset_pass.css' %}">
+	<script>
+		<!-- to prevent the key strokes -->
+		document.onkeydown = function(e) {
+		if(event.keyCode == 123) {return false;}
+		if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){return false;}
+		if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){return false;}
+		if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){return false;}
+		}
+	</script>
+</head>
+<!-- preventing the right click menu -->
+<body oncontextmenu="return false;" background="{% static 'banner.jpg' %}">
+<script>
+	if ({{flag}}){
+		alert({{message}});
+	}
+</script>
+
+<div class="main">
+ <!-- works just fine -->
+	<form method = "POST" enctype="application/x-www-form-urlencoded" action="../reset_check" align="center">{% csrf_token %}
+		<input class="sub" required type="number" name="stud_id" min="2014101100" placeholder="Enter your registration number" min="2014101100">
+		<input class="sub" type = "password" required minlength=8 name="password" id ="password" placeholder="new password">
+		<input class="sub" type = "password" required minlength=8 name="confirm_password" id ="confirm_password" placeholder="confirm password">
+		<input class="sub" style="border:none;font-size:1.1em;color:white;background:midnightblue" type="submit">
+		
+		<script>
+			var password = document.getElementById("password"), 
+			confirm_password = document.getElementById("confirm_password");
+			function validatePassword(){
+			  if(password.value != confirm_password.value) {
+				confirm_password.setCustomValidity("Passwords Don't Match");
+			  } else {
+				confirm_password.setCustomValidity('');
+			  }
+			}
+			password.onchange = validatePassword;
+			confirm_password.onkeyup = validatePassword;
+		</script>
+	</form>
+</div>
+</body>
+</html>

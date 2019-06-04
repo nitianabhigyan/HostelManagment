@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+{% block content %}
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Page</title>
+<script>
+function open_page(evt, pageName){
+    var i, tabcontent, tablinks;
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+	if (pageName == 'Application'){
+		alert("You will be redirected to another page");
+		window.location = 'application';
+	}
+	if (pageName == 'Logout'){
+	if(confirm('Are you sure you want to logout?')) {
+		// reset the back pages.
+		history.replaceState('logout',"logout","logout")
+		window.location = 'logout';
+	}
+	else{
+		alert("You cancelled the request.");
+		default_run();
+		}}
+	if (pageName == 'Edit'){
+		if(confirm("You will be redirected \n proceed?")){
+			window.location = "{% url 'alter_student' %}";
+		}
+		else{
+			default_run();
+		}}
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(pageName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+function default_run(){
+	document.getElementById("default").click();
+}
+</script>
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto;
+    background-color: rgba(56, 56, 61, 0.85);
+}
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+	border-radius: 2%;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 1.5s;
+    animation-name: bounceInDown;
+    animation-duration: 1.0s;
+	animation-timing-function: linear;
+}
+/* used by complaint form*/
+@keyframes bounceInDown {
+  from,
+  60%,75%,90%,to {
+    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -1000px, 0);
+    transform: translate3d(0,-1000px, 0);
+  }
+  50% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 30px, 0);
+    transform: translate3d(0, 30px, 0);
+  }
+  75% {
+    -webkit-transform: translate3d(0, -15px, 0);
+    transform: translate3d(0, -15px, 0);
+  }
+  90% {
+    -webkit-transform: translate3d(0, 5px, 0);
+    transform: translate3d(0, 5px, 0);
+  }
+  95% {
+    -webkit-transform: translate3d(0, 2px, 0);
+    transform: translate3d(0, 2px, 0);
+  }
+  97% {
+    -webkit-transform: translate3d(0, -1px, 0);
+    transform: translate3d(0, -1px, 0);
+  }
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.close {color: midnightblue;float: right;font-size: 35px;}
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;	
+}
+/*for width of complaint form*/
+.container-contact1 {
+	width: 100%;
+	height: 100%
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 90%;
+    border-radius: 5px;
+	background-color: white;
+	opacity:.92;	
+}
+.card:hover {box-shadow: 0 10px 27px 0 rgba(0,0,0,0.7);}
+.id_card {
+	box-shadow:0 10px 50px 0 rgba(5,5,80,.9);
+	transition:opacity 2.0s;
+	transition-timing-function:ease-in-out;
+    width: 620px;
+	height:350px;
+	text-align: left;
+    border-radius: 12px;
+	background-color: white;
+	font-family: sans-serif;
+}
+.img_class {
+  border-radius:10px;
+	box-shadow: 0 5px 10px 0 rgba(0,0,0,0.7);	
+	opacity:.98;
+	z-index:1;	
+}
+.img_class:hover{transform:scale(2.1);transition:1.0s;}
+.container {
+    padding: 2px 16px;
+    text-align: center;
+    font-family: arial;
+}
+/*left float effect*/
+.tabcontent{position:relative;animation:animateleft 0.8s}
+@keyframes animateleft{from{left:-300px;opacity:0.01} to{left:0;opacity:1}}
+
+/* for screens smaller than 600px */
+@media only screen and (max-width: 700px) and (min-width: 300px) {
+  .tabcontent{animation:animatezoom 0.6s;width:100%;margin:0;}
+  @keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
+  .id_card{width:100%;}
+}
+/*css for complaint tab*/
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    text-align: center;
+    padding: 8px;}
+tr:nth-child(odd){background-color: rgba(0,0,0,0.2);}
+th {
+    background-color: #4CAF50;
+    color: white;}
+/*Hides the scrollbar bar*/
+body::-webkit-scrollbar {display:none;}
+</style>
+{% load staticfiles %}
+<!-- title icon -->
+<link rel="icon" href="{% static 'nitn_logo.png' %}" type="image" sizes="16x16">
+<!-- tab styling -->
+<link rel="stylesheet" type="text/css" href="{% static 'student/css/tab_styling.css' %}" >
+<!-- box and mobile adaptability styling -->
+<link rel="stylesheet" type="text/css" href="{% static 'student/css/box_styling.css' %}" >
+<!-- stylesheet for complaints tab -->
+<link rel="stylesheet" type="text/css" href="{% static 'student/css/main_complaint.css' %}">
+<!-- icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<!-- base font color (except table)-->
+<body onLoad="default_run()" style="font-family:Verdana;margin:0;color:midnightblue;background-image:url({% static 'banner.jpg' %});background-repeat:no-repeat;width:100%;background-size:cover;height:100%;overflow:scroll;"> 	
+<script>
+if ({{alert}}) {
+	alert("{{message}}");
+}
+</script>
+	<!-- Header font color-->
+	<div style="background-color:mintcream; padding:15px;text-align:center; opacity: .9 "width= "15px;"> 
+	
+		<!-- Logo of NIT-->
+		<img src="{% static 'nitn_logo.png' %}" align="right" width="8%" style=" min-width: 100px;opacity:.8" alt="nitn logo">
+			<h1>Student Page</h1>
+		</div>
+
+		<div style="overflow:auto;width:100%;">
+		<!-- 20 : 60 : 20 division among div -->
+			<br>
+			<div class="menu">
+				<div class="tab">
+					<button class="tablinks" onclick="open_page(event, 'Home')" id="default" ><i class="fa fa-home" style="color: #0D3;"></i> Home</button> 
+					<button class="tablinks" onclick="open_page(event, 'Hostel')"><i class="fa fa-hospital-o" style="color: #9400D3;"></i> Hostel</button> <!--variable to be handle with jinja logic-->
+					<button class="tablinks" onclick="open_page(event, 'Warden')"><i class="fa fa-address-book" style="color:yellow;"></i> Warden In-Charge</button>
+					<button class="tablinks" onclick="open_page(event, 'Complaints')"><i class="fa fa-exclamation-circle" style="color: red;"></i> Grievance Managment</button>
+					<button type="button" disabled class="tablinks" onclick="open_page(event, 'Library')"><i class="fa fa-envelope" style="color:#FF7F00;"></i> Library</button>
+					<button class="tablinks" onclick="open_page(event, 'Application')"><i class="fa fa-sign-out" style="color:#4B0082;"></i> Leave Managment</button>
+					<button class="tablinks" onclick="open_page(event, 'Edit')"><i class="fa fa-cogs" style="color:hotpink;"></i> Edit Information</button>
+					<button class="tablinks" onclick="open_page(event, 'Logout')"><i class="fa fa-sign-out" style="color:#4B0082;"></i> Log out</button>
+				</div>
+
+			</div>
+			<!-- student details tab -->
+			<div id="Home" class="tabcontent" align="center">
+			<div class="id_card" id="V_Card" style="display:flex;flex-direction:column;">
+				<div id="card_head" style="background:#025402;height:30%;border-top-right-radius:12px;display:flex;border-top-left-radius:12px;order:1">
+					<img src="{% static 'nitn_logo.png' %}" style="opacity:.9;height:80%;margin-left:8px;margin-top:4px;order:1;"/>
+					<div id="header_div" style="color:white;order:2;width:100%;font-size:15px;text-align:center;display:flex;flex-direction:column;">
+						<p style="margin-top:12px;margin-bottom:-18px;"><b>राष्ट्रीय  प्रौद्योगी संस्थान नागालैंड <br>NATIONAL INSTITUTE OF TECHNOLOGY NAGALAND</b></p>
+						<p style="line-height:20px;">(An Institue of National Importance under MHRD,Government of India)<br>Chumukedima, Dimapur, Nagaland - 797 103</p>
+				</div>
+			</div>
+			
+			<p id="card_mid" style="order:2;color:red;font-size:16.5px;text-align:center;margin-bottom:0px;margin-top:4px;font-weight:470;">Student Identity Card</p>
+			
+			<div id="card_body" style="display:flex;height:230px;order:3;font-size:17px;color:black;">
+				<div id="card_write" style="order:1;margin-left:12px;width:75%;margin-top:-25px;">
+					<br><br><b>Student Name  </b>:{{student.student_name}}
+					<br><br><b>Registration No. </b>:{{student.regn_no}}
+					<br><br><b>Branch </b>:{{student.branch}}
+					<br><br><b>Semester</b>: {{student.semester}}
+					<br><br><b>Contact Number </b>:{{student.contact_no}}
+				</div>
+				<img class="img_class"style="order:2;width:25%;margin-right: 18px;margin-bottom: 47px;" id="stud_img" alt="Photo of Student" src="/static/student/{{student.regn_no}}.jpg" alt="Photo of Student">
+			</div>
+			</div>
+			</div>
+			<!-- hostel details tab -->
+			<div id="Hostel" class="tabcontent" align="center">
+				<div class="card" style="width:80%;padding: 50px;">	
+				
+					<p><b>Hostel:-</b> {{ student.hostel_name }}</p>
+					<p><b>Alloted Room:-</b> {{ student.room_no }}</p>
+					<p><b>Hostel Incharge:-</b> {{ student.hostel_name.warden_id.warden_name }}</p>
+					<p><b>Caretaker Contact:-</b> {{student.hostel_name.caretaker_contact}}</p>
+				</div>
+			</div>
+			<!-- warden details tab -->
+			<div id="Warden" class="tabcontent" align="center">
+				<div class="card" style="width:80%;padding: 50px;">	
+					<p><b>Warden Name</b>:-{{ student.hostel_name.warden_id.warden_name }}</p>
+					<p><b>Contact Number:- </b>{{ student.hostel_name.warden_id.contact_no}}</p>
+					<p><b>Office Address:- </b>{{ student.hostel_name.warden_id.office_addr}}</p>
+					<p><b>Email Id:- </b>{{ student.hostel_name.warden_id.email_id}}</p>
+				</div>
+			</div>
+
+			<!-- complaints tab -->
+			<div id="Complaints" class="tabcontent" align="center">
+			<button id="myBtn" class="contact1-form-btn" onMouseOver="this.style.background='#333'" onMouseOut="this.style.background='rgb(51, 51, 133)'"style="background:rgb(51, 51, 133);outline:none;border:none;">File a new complaint<i class="fa fa-newspaper-o"></i></button>
+			<br><br>
+			<button id="myBtn2" class="contact1-form-btn" style="outline:none;border:none;">View your complaints<i class="fa fa-folder-open"></i></button>			
+			<div class="card" id="detailscard" style="overflow-x:auto;overflow-y:scroll;padding-bottom:50px;width:100%;display:none;margin-top:7%">
+				<table>				<!-- to be populated by details of registered complaint -->
+				<tr>
+					<th>Complaint Id</th>
+					<th>Registration No.</th>
+					<th>Title</th>
+					<th>Type</th>
+					<th>Date</th>
+					<th>Status</th>
+				</tr>
+				{% for complaint in complaints %}
+					<tr>
+						<td>{{complaint.complaint_id}}</td>
+						<td>{{complaint.regn_no}}</td>				
+						<td>{{complaint.complaint_title}}</td>				
+						<td>{{complaint.complaint_type}}</td>				
+						<td>{{complaint.complaint_date}}</td>	
+						{% if complaint.complaint_solved %}
+								<td>Solved</td>			
+						{% else %}
+								<td>Pending</td>	
+						{% endif %}						
+					</tr>
+				{% endfor %}
+				</table>
+			</div>
+			<div id="myModal" class="modal">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+				  <span class="close">&times;</span>
+						<div class="container-contact1">
+							<div class="contact1-pic js-tilt" data-tilt>
+								<img src="{% static 'nitn_logo.png' %} "alt="nitn_logo">
+							</div>
+							<form id="form" method="POST" action="new_complaint"class="contact1-form validate-form" enctype="multipart/form-data">
+							{% csrf_token %}
+								<span class="contact1-form-title">
+									<strong>File a new Complaint</strong>
+								</span>
+
+								<div class="wrap-input1 validate-input">
+									<input class="input1" type="text" name="title" id="title" required placeholder="Title of complaint">
+									<span class="shadow-input1"></span>
+								</div>
+
+								<div class="wrap-input1 validate-input">
+									<span style="font-family: Montserrat-Regular, sans-serif;font-size:20px;padding-bottom:10px;text-align:left;color:#333333;line-height: 1.2;">Type of complaint</span>
+									<select class="input1" name="Type" style="height:50px;border-radius:25px;padding:0 30px;outline:none;border:none;font-family: Montserrat-Regular, sans-serif;">
+										<option value="Electrical">Electrical</option>
+										<option value="Repair">Repairs</option>
+										<option value="Water">Water</option>
+										<option value="Other">Others</option>
+									</select>
+								</div>
+						
+								<div >
+									<span style="font-family: Montserrat-Regular, sans-serif;font-size:20px;padding-bottom:10px;text-align:left;color:#333333;line-height: 1.2;">Complaint Related image (optional)</span>
+									<button class="contact1-form-btn" style="width:100%;background: #191970; margin-bottom:20px;outline:none;border:none">
+										<span style="z-index:0;">Select</span>
+										<input type="file" name="photo" accept="image/*" style="width:max-content;z-index:1;position: absolute;opacity:0;overflow:hidden !important;height: 50px;">
+									</button>
+								</div>
+								
+								<div class="wrap-input1 validate-input">
+									<textarea class="input1" name="description" id="description" required placeholder="description of complaint"></textarea>
+									<span class="shadow-input1"></span>
+								</div>
+								
+								<div class="container-contact1-form-btn">
+									<button class="contact1-form-btn" onclick="submit" style="outline:none;border:none;">
+										<span>
+											Send <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+										</span>
+									</button>
+								</div>
+							</form>
+						</div>
+				<!--required for the image effect  all 3-->
+					<script src="{% static '/student/js/jquery-3.2.1.min.js' %}"></script>
+					<script src="{% static '/student/js/tilt.jquery.min.js' %}"></script>	
+					<script>
+					<!-- controls the change in size of image when hovered by mouse. -->
+					$('.js-tilt').tilt({
+						scale: 1.12
+					})
+					</script>
+					
+				<div style=" padding: 20px 16px;background-color: #88bddf;color: black;">
+					<h3>Click anywhere outside to cancel</h3>
+				</div>
+			  </div>
+		</div>
+		<script>
+		// Get the modal
+		var modal = document.getElementById('myModal');
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn")
+		//get the view complaints button
+		var btn2 = document.getElementById("myBtn2")
+		//get the details card
+		var mycard = document.getElementById("detailscard")
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+		var count = 0;
+		// When the user clicks the button, open the modal. 
+		btn.onclick = function() {
+			modal.style.display = "block";
+			mycard.style.display = "none";
+		}
+		btn2.onclick = function() {
+			if (count == 0){
+				mycard.style.display = "block";
+				count = 1;
+			}
+			else{
+				mycard.style.display = "none";
+				count = 0;
+			}
+		}
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+				mycard.style.display = "none";
+			}
+		}
+		</script>
+		<!--library tab-->
+		</div>			
+			<div id="Library" class="tabcontent" align="center">
+				<h1> Coming soon</h1> 
+				<h2> Books Taken</h2>
+				<p> Books due date</p> <!-- use jinja for dynamic messaging-->	
+			</div>
+			<!-- edit info tab -->
+			<div id="Edit" class="tabcontent" align="center">
+				<!-- <p> Edit name</p> -->
+				<!-- <p> Edit Contact Number</p> -->
+				<!-- <p> Edit mail.</p> -->
+			</div>
+			<!-- log out,Application tabs are empty (prevents error on call)-->
+			<div id="Application" class="tabcontent" align="center">
+			</div>
+			<div id="Logout" class="tabcontent" align="center">
+			</div>
+	<!--ends here-->
+	</div>
+</body>
+
+<footer>
+	<div style= "background-color:#e5e5e5;text-align:center;right:0;bottom:0;left:0;padding:10px;">
+	Created By C.S.E. Dept. NITN
+	</div>
+</footer>
+
+</html>
+{% endblock %}

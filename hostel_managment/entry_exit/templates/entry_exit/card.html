@@ -1,0 +1,42 @@
+<style>
+.card {
+    //box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+	box-shadow:0 10px 50px 0 rgba(5,5,80,.9);
+	transition:opacity 2.0s;
+	transition-timing-function:ease-in-out;
+    width: 620px;
+	height:350px;
+	margin-left:20%;
+	text-align: left;
+	margin-top:60px;
+    border-radius: 12px;
+	background-color: white;
+}
+//.card:hover {box-shadow: 0px 20px 40px rgba(5,5,80,.9);transition:1s;transform:scale(1.05);}
+.img_class {
+	border-radius:10px;
+	box-shadow: 0 5px 10px 0 rgba(0,0,0,0.7);	
+	opacity:.98;
+	z-index:1;
+}
+
+</style>
+</head>
+<body background="grey"><br><br>
+	<div class="card" id="V_Card" style="opacity: 0.9;display:flex;flex-direction:column;">
+			<div id="card_head" style="background:#025402;height:30%;border-top-right-radius:12px;display:flex;border-top-left-radius:12px;order:1">
+				<img src="../../../home/static/nitn_logo.png" style="opacity:.9;height:80%;margin-left:8px;margin-top:4px;order:1;"/>
+				<div id="header_div" style="color:white;order:2;width:100%;font-size:15px;text-align:center;display:flex;flex-direction:column;">
+					<p style="margin-top:12px;margin-bottom:-5px;"><b>राष्ट्रीय  प्रौद्योगी संस्थान नागालैंड <br>NATIONAL INSTITUTE OF TECHNOLOGY NAGALAND</b></p>
+					<p>(An Institue of National Importance under MHRD,Government of India)<br>Chumukedima Dimapur Nagaland -797 103</p>
+				</div>
+			</div>
+			
+			<p id="card_mid" style="order:2;color:red;font-size:16.5px;text-align:center;margin-bottom:0px;margin-top:4px;font-weight:470;">Student Identity Card</p>
+			
+			<div id="card_body" style="display:flex;height:230px;order:3;font-size:17px;">
+				<div id="card_write" style="order:1;margin-left:12px;width:75%;"><br><br><b>Student Name </b>:Abhigyan Kumar<br><br><b>Registration No. </b>:2016105124</b><br><br><b>Branch: </b>CSE<br><br><b>Contact Number: </b>+919455051189</div>
+				<img class="img_class"style="order:2;width:25%;margin-right: 18px;margin-bottom: 47px;" id="stud_img" alt="Photo of Student" src="2016105124.jpg">
+			</div>
+	</div>
+</body>

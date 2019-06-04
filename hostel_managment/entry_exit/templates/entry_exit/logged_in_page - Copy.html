@@ -1,0 +1,235 @@
+<html>
+<!-- backup of logged_in_page.html to last consistent state -->
+<head>
+<title>Guard Login Page</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
+<style>
+*, *:after, *:before {
+  box-sizing: border-box;
+}
+.form_divs{
+	padding-left: 25%;
+    padding-top: 20px;
+	display:none;
+}
+.form_class{
+    width:100%;
+	height:96%;
+}
+.form_element{
+	font-size:large;
+	font-weight:720;
+	border-radius:10%;
+	padding: 10 30 10 30;
+	background: #fffaf0;
+	font-family:Verdana;
+	border:none;
+}
+.card {
+	box-shadow:0 10px 50px 0 rgba(5,5,80,.9);
+	transition:opacity 2.0s;
+	transition-timing-function:ease-in-out;
+    width: 620px;
+	height:350px;
+	margin-left:20%;
+	text-align: left;
+	margin-top:60px;
+    border-radius: 12px;
+	background-color: white;
+	opacity:0;
+	font-family: sans-serif;
+}
+.img_class {
+	border-radius:10px;
+	box-shadow: 0 5px 10px 0 rgba(0,0,0,0.7);	
+	opacity:.98;
+	z-index:1;
+}
+.img_class:hover{transform:scale(2.1);transition:1.0s;}
+input[type="button"], input[type="submit"] {
+	 box-shadow: 5px 10px 25px rgba(0,0,5,1);
+	 border: none;
+}
+input[type="button"]:active, input[type="submit"]:active {
+	background-color: #fff;
+	transform: translateY(4px);
+	box-shadow: 0px 20px 20px rgba(0,0,0,0.7);
+}
+
+.qrcode-text-btn {
+	cursor:pointer;
+	margin-top: 10px;
+	order:3;
+	z-index:1;
+}
+
+/* Hide HTML5 Up and Down arrows. */
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;}
+input[type="number"] {-moz-appearance: textfield;}
+</style>
+<script>
+	function default_func(){
+		document.getElementById('Regn_No_div').style.display = 'block';
+	}
+</script>
+</head>
+{% load staticfiles %}
+<body onload="default_func()" style="background-image:url({% static 'banner.jpg' %});background-repeat:no-repeat;width:100%;background-size:cover; height: 100%;overflow:hidden;">
+
+<form id="myform" class="form_class" action="" method="POST" onsubmit="return submit_func()" enctype="application/x-www-form-urlencoded">
+	{% csrf_token %}
+	<div id="Logout_div" style="width:60%;margin-top:5px;margin-left:25%;margin-bottom:10px;">
+		<i class="fas fa-sign-out-alt" style="size:5px;position:absolute;margin: 15 10;"></i>
+		<input class="form_element" type="button" onclick="logout_func()" value=" Logout"style="margin-right:10px;">
+		<input class="form_element" type="button" onclick="InfoBox()" value="Students Outside the campus List">
+		<script>
+			function logout_func(){
+			if(confirm('Are you sure you want to logout?')) {
+				// reset the back pages.
+				history.replaceState('guard/logout',"","")
+				window.location = 'guard/logout';
+			}
+			}
+			if ({{alert_flag}}){
+				// To Prevent ReSubmission Of Form on Reload
+				history.replaceState('entry',"","")
+				alert("{{alert_message}}");
+			}
+		</script>
+	</div>
+	
+	<div class="card" id="V_Card" style="display:flex;flex-direction:column;">
+			<div id="card_head" style="background:#025402;height:30%;border-top-right-radius:12px;display:flex;border-top-left-radius:12px;order:1">
+				<img src="{% static 'nitn_logo.png' %}" style="opacity:.9;height:80%;margin-left:8px;margin-top:4px;order:1;"/>
+				<div id="header_div" style="color:white;order:2;width:100%;font-size:15px;text-align:center;display:flex;flex-direction:column;">
+					<p style="margin-top:12px;margin-bottom:-5px;"><b>राष्ट्रीय  प्रौद्योगी संस्थान नागालैंड <br>NATIONAL INSTITUTE OF TECHNOLOGY NAGALAND</b></p>
+					<p>(An Institue of National Importance under MHRD,Government of India)<br>Chumukedima, Dimapur, Nagaland - 797 103</p>
+				</div>
+			</div>
+			
+			<p id="card_mid" style="order:2;color:red;font-size:16.5px;text-align:center;margin-bottom:0px;margin-top:4px;font-weight:470;">Student Identity Card</p>
+			
+			<div id="card_body" style="display:flex;height:230px;order:3;font-size:17px;">
+				<div id="card_write" style="order:1;margin-left:12px;width:75%;margin-top:-25px;"></div>
+				<img class="img_class"style="order:2;width:25%;margin-right: 18px;margin-bottom: 47px;" id="stud_img" alt="Photo of Student" src="">
+			</div>
+	</div>
+	<div id="Info_box" class="card" style="overflow:scroll;display:none;">
+		
+		<script>
+		//add preloaderor a little something
+			function InfoBox(){
+				var box = document.getElementById('Info_box');
+				if (box.style.display === "none"){
+					box.style.display = "block";
+					document.getElementById('V_Card').style.display = "none";
+					
+					$.ajax({dataType: "json",
+					url:'get_obj',
+					type: 'GET',
+					success: function(db_obj){
+						console.log(db_obj)
+					}})
+				}
+				else{
+					box.style.display = "none";
+					document.getElementById('V_Card').style.display = "flex";
+				}
+			}
+		</script>
+	</div>
+	  
+	  <div class="form_divs" id="Regn_No_div" style="display:block;">
+		<script src="{% static 'entry_exit/qrdecode.js' %}"></script>
+			<i class="fas fa-id-card-alt" style="position:absolute;margin: 15 10;"></i>
+			<input type="number" class="form_element" name="Regn_No" id="Regn_No" required placeholder="Registration Number" autocomple="off" style="order:2;"/>
+			<label class=qrcode-text-btn style="background:url('{% static 'entry_exit/qr_icon.svg' %}') 50% 50% no-repeat;position:absolute;width:25px;margin-left:-35px">
+				<input type=file accept="image/*" capture="camera" onchange="openQRCamera(this);" tabindex=-1 style="position:relative;opacity:0;width:25px;z-index:0;cursor:pointer;"/>
+			</label> 
+		<input type="button" style="order:4;" class="form_element" id="mybutton" onclick="verify()" value="Verify">
+		<script>
+		function openQRCamera(node) {
+		  var reader = new FileReader();
+		  reader.onload = function() {
+			node.value = "";
+			qrcode.callback = function(res) {
+			  if(res instanceof Error) {
+				alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+			  } else {
+				node.parentNode.previousElementSibling.value = res;
+			  }
+			};
+			qrcode.decode(reader.result);
+		  };
+		  reader.readAsDataURL(node.files[0]);
+		}
+		</script>
+		
+	  </div>
+	  
+	  <div class="form_divs" id="Reason_div">
+		<i class="fas fa-question-circle" style="size:5px;position:absolute;margin: 15 10;"></i>
+		<input type="text" name="Reason" id="Reason" class="form_element" placeholder="Enter Reason " required />
+		<input type="submit" class="form_element" value="submit">
+	 </div>
+	<script>
+		function verify(){
+			if ($('#Regn_No').val() === ''){
+				alert('blank value detected. Please a enter a Registration number first');
+			}
+			else{
+				$.ajax({dataType: "json",
+					url:'check',
+					data: {Regn_No_ajax:$('#Regn_No').val()},
+					type: 'GET',
+					success: function(data){
+						//if there is no flag meaning new entry
+						if (data.flag === 0){
+							document.getElementById('Regn_No_div').style.display='none';
+							document.getElementById('Reason_div').style.display = 'block';
+							var card = document.getElementById('V_Card');
+							var card_write = document.getElementById('card_write');
+							var img = document.getElementById('stud_img');
+							var name = "<b>Student Name  </b>:"+data.student.name;
+							var registration ="<b>Registration No. </b>:"+data.student.regn_no+"</b>";
+							var branch = "<b>Branch </b>:"+data.student.branch;
+							var hostel = "<b>Hostel </b>:"+data.student.hostel;
+							var contact = "<b>Contact Number </b>:"+data.student.contact_no;
+							var nl = "<br><br>";
+							card_write.innerHTML = nl+name+nl+registration+nl+branch+nl+hostel+nl+contact;
+							img.src="/static/student/"+data.student.regn_no+".jpg"
+							card.style.opacity = .99;
+						}
+						else{
+							if (data.hasOwnProperty('error_message')){
+								alert(data.error_message);
+							}
+							else{
+								msg = "Please Confirm:\nStudent with Registration Number: "+$('#Regn_No').val()+" has returned to campus?";
+								if(confirm(msg)){
+								//call the submit button
+									$('#myform').submit();}
+							}
+						}
+					}
+				});
+			}
+		}
+		function submit_func(){
+				
+				var reason = $('#Reason').val();
+				if (reason!== ""){
+					var msg = "Please confirm:- \n The Registration Number is: " +$('#Regn_No').val()+"\n The Reason is: "+$('#Reason').val();
+					return confirm(msg);
+				}//in future use jquery to create custom confirm message.
+				else {return}
+		}
+	</script>
+</form>
+
+</body>
+</html>
