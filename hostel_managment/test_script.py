@@ -1,3 +1,4 @@
+# attempting to use Tkinter to ease out the process for starting and configuring the manage.py 
 import os
 import tkinter as TK
 from threading import Thread
