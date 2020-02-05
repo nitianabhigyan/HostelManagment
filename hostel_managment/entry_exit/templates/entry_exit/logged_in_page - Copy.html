@@ -1,13 +1,14 @@
 <html>
-<!-- backup of logged_in_page.html to last consistent state -->
 <head>
 <title>Guard Login Page</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/solid.css" integrity="sha384-+0VIRx+yz1WBcCTXBkVQYIBVNEFH1eP6Zknm16roZCyeNg2maWEpk/l/KsyFKs7G" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/fontawesome.css" integrity="sha384-jLuaxTTBR42U2qJ/pm4JRouHkEDHkVqH0T1nyQXn1mZ7Snycpf6Rl25VBNthU4z0" crossorigin="anonymous">
 <style>
 *, *:after, *:before {
   box-sizing: border-box;
+  margin:0px;
 }
 .form_divs{
 	padding-left: 25%;
@@ -41,6 +42,19 @@
 	opacity:0;
 	font-family: sans-serif;
 }
+
+.table_card {
+   	width:100%;
+	background-color: white;
+	opacity:.95;
+	border-collapse: collapse;
+	vertical-align: middle;
+	font-family: sans-serif;
+	font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+td {height:60px;}
 .img_class {
 	border-radius:10px;
 	box-shadow: 0 5px 10px 0 rgba(0,0,0,0.7);	
@@ -62,14 +76,81 @@ input[type="button"]:active, input[type="submit"]:active {
 	cursor:pointer;
 	margin-top: 10px;
 	order:3;
-	z-index:1;
+	z-index:0;
 }
-
+.display_class{
+	width:640px;
+	height:480px;
+	display:none;}
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.1);
+    transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem 1.5rem;
+	width:800px;
+	height:500px;
+    border-radius: 0.5rem;
+}
+.close-button {
+    float: right;
+    width: 1.5rem;
+    line-height: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    background-color: lightgray;
+}
+.close-button:hover {
+    background-color: darkgray;
+}
+.show-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1.0);
+    transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+/*Hides the scrollbar bar*/
+body::-webkit-scrollbar {
+	display:none;
+}
 /* Hide HTML5 Up and Down arrows. */
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;}
 input[type="number"] {-moz-appearance: textfield;}
+
+#Info_box::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color:white;
+	border-radius:20px;
+}
+
+#Info_box::-webkit-scrollbar{
+	width: 12px;
+	border-radius:10px;
+}/*the width of scrollbar etc*/
+
+#Info_box::-webkit-scrollbar-thumb
+{
+	background-color: lightblue;	
+	border-radius: 10px;
+background-image: -webkit-linear-gradient(45deg,lightblue,#6c7ae0,lightblue,#6c7ae0);
+}/* the actual button portion*/
 </style>
 <script>
 	function default_func(){
@@ -78,8 +159,8 @@ input[type="number"] {-moz-appearance: textfield;}
 </script>
 </head>
 {% load staticfiles %}
-<body onload="default_func()" style="background-image:url({% static 'banner.jpg' %});background-repeat:no-repeat;width:100%;background-size:cover; height: 100%;overflow:hidden;">
-
+<body onload="default_func()" style="background-image:url({% static 'admin.jpg' %});background-repeat:no-repeat;background-size:cover;overflow:scroll;">
+<script src="{% static 'entry_exit/qrdecode.js' %}"></script>
 <form id="myform" class="form_class" action="" method="POST" onsubmit="return submit_func()" enctype="application/x-www-form-urlencoded">
 	{% csrf_token %}
 	<div id="Logout_div" style="width:60%;margin-top:5px;margin-left:25%;margin-bottom:10px;">
@@ -106,7 +187,7 @@ input[type="number"] {-moz-appearance: textfield;}
 			<div id="card_head" style="background:#025402;height:30%;border-top-right-radius:12px;display:flex;border-top-left-radius:12px;order:1">
 				<img src="{% static 'nitn_logo.png' %}" style="opacity:.9;height:80%;margin-left:8px;margin-top:4px;order:1;"/>
 				<div id="header_div" style="color:white;order:2;width:100%;font-size:15px;text-align:center;display:flex;flex-direction:column;">
-					<p style="margin-top:12px;margin-bottom:-5px;"><b>राष्ट्रीय  प्रौद्योगी संस्थान नागालैंड <br>NATIONAL INSTITUTE OF TECHNOLOGY NAGALAND</b></p>
+					<p style="margin-top:12px;margin-bottom:-2px;"><b>राष्ट्रीय  प्रौद्योगी संस्थान नागालैंड <br>NATIONAL INSTITUTE OF TECHNOLOGY NAGALAND</b></p>
 					<p>(An Institue of National Importance under MHRD,Government of India)<br>Chumukedima, Dimapur, Nagaland - 797 103</p>
 				</div>
 			</div>
@@ -118,8 +199,30 @@ input[type="number"] {-moz-appearance: textfield;}
 				<img class="img_class"style="order:2;width:25%;margin-right: 18px;margin-bottom: 47px;" id="stud_img" alt="Photo of Student" src="">
 			</div>
 	</div>
-	<div id="Info_box" class="card" style="overflow:scroll;display:none;">
-		
+	
+	<div id="Info_box" style="display:none;width:80%;height:350px;margin-left:10%;text-align:center;margin-top:60px;margin-bottom:10px;overflow-y:scroll;">
+		<table class="table_card" style="border-radius:8px;">
+		<thead>
+			<tr style="width:auto;height:80px;background:lightblue;font-size:1.2em;font-family:Trebuchet MS">
+				<th>Entry_ID</th>
+				<th>Registration_No</th>
+				<th>Name</th>
+				<th>Out Date</th>
+				<th>Out Time</th>
+				<th>Reason</th>
+			</tr>
+		</thead>
+			{% for object in db_object %}
+			<tr style="background:{% cycle 'white' '#f8f6ff' %}">
+				<td>{{ object.entry_id }}</td>
+				<td>{{ object.regn_no }}</td>
+				<td>{{ object.regn_no.student_name }}</td>
+				<td>{{ object.out_date.date }}</td>
+				<td>{{ object.out_date.time }}</td>
+				<td>{{ object.reason }}</td>
+			</tr>
+			{% endfor %}
+		</table>
 		<script>
 		//add preloaderor a little something
 			function InfoBox(){
@@ -127,13 +230,6 @@ input[type="number"] {-moz-appearance: textfield;}
 				if (box.style.display === "none"){
 					box.style.display = "block";
 					document.getElementById('V_Card').style.display = "none";
-					
-					$.ajax({dataType: "json",
-					url:'get_obj',
-					type: 'GET',
-					success: function(db_obj){
-						console.log(db_obj)
-					}})
 				}
 				else{
 					box.style.display = "none";
@@ -144,33 +240,93 @@ input[type="number"] {-moz-appearance: textfield;}
 	</div>
 	  
 	  <div class="form_divs" id="Regn_No_div" style="display:block;">
-		<script src="{% static 'entry_exit/qrdecode.js' %}"></script>
 			<i class="fas fa-id-card-alt" style="position:absolute;margin: 15 10;"></i>
-			<input type="number" class="form_element" name="Regn_No" id="Regn_No" required placeholder="Registration Number" autocomple="off" style="order:2;"/>
-			<label class=qrcode-text-btn style="background:url('{% static 'entry_exit/qr_icon.svg' %}') 50% 50% no-repeat;position:absolute;width:25px;margin-left:-35px">
-				<input type=file accept="image/*" capture="camera" onchange="openQRCamera(this);" tabindex=-1 style="position:relative;opacity:0;width:25px;z-index:0;cursor:pointer;"/>
-			</label> 
+			<input type="number" class="form_element" name="Regn_No" id="Regn_No" required placeholder="Registration Number" autocomple="off" style="order:2;">
+			<label class="qrcode-text-btn" style="background:url('{% static 'entry_exit/qr_icon.svg' %}') 50% 50% no-repeat;position:absolute;width:25px;height:25px;margin-left:-35px" onclick="openQRCamera()"></label> 
 		<input type="button" style="order:4;" class="form_element" id="mybutton" onclick="verify()" value="Verify">
-		<script>
-		function openQRCamera(node) {
-		  var reader = new FileReader();
-		  reader.onload = function() {
-			node.value = "";
-			qrcode.callback = function(res) {
-			  if(res instanceof Error) {
-				alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
-			  } else {
-				node.parentNode.previousElementSibling.value = res;
-			  }
-			};
-			qrcode.decode(reader.result);
-		  };
-		  reader.readAsDataURL(node.files[0]);
-		}
-		</script>
-		
 	  </div>
+	<div class="modal">
+		<div class="modal-content">
+			<span class="close-button">×</span>
+			<div id="camera_div" class="">
+			<video class="display_class"></video>
+			<canvas class="display_class"></canvas>
+			<button id="button" onclick="click_func()">Take Snap!</button>
+		</div>
+		</div>
+	</div>
 	  
+	  
+<script>
+const modal = document.querySelector(".modal");
+var trigger = document.querySelector(".qrcode-text-btn");
+var closeButton = document.querySelector(".close-button");
+
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {toggleModal();}
+}
+
+trigger.addEventListener("click", toggleModal);
+closeButton.addEventListener("click", toggleModal);
+window.addEventListener("click", windowOnClick);
+</script>
+<script>
+	var constraint = {"video":true};
+	var errBack=function(error){alert("Video Capture Error");};
+	const video = document.querySelector('video');
+	const canvas = document.querySelector('canvas');
+	canvas.width = 1000;
+	canvas.height = 800;
+
+	function openQRCamera(){
+	document.getElementById('camera_div').style.display='flex';
+	video.style.display='block';
+	navigator.mediaDevices.getUserMedia(constraint).
+	  then((stream) => {video.srcObject = stream;video.play();});
+	}
+ 	function click_func(){
+	  var temp = canvas.getContext("2d");
+	  canvas.style.display = 'block';
+	  video.style.display = 'none';
+	  video.pause();
+	  temp.drawImage(video,0,0,canvas.width,canvas.height);
+	  //drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
+	  video.display = 'none';
+	  QrDecoder();
+	}
+function QrDecoder() {
+    qrcode.callback = function(res) {
+      if(res instanceof Error) {
+        alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
+		canvas.style.display = 'none';
+		video.style.display = "block";
+		video.play();
+      }
+	  else {
+		document.getElementById('Regn_No').value = res;
+ 		stopStreamedVideo();
+		verify();
+	  }
+    };
+	qrcode.decode(canvas.toDataURL())
+  };
+  function stopStreamedVideo() {
+  //close the media stream and return to previous regn_no screen
+	document.getElementById('camera_div').style.display = 'none';
+	canvas.style.display = 'none';
+	video.style.display = 'none';
+	modal.classList.toggle("show-modal");
+	let stream = video.srcObject;
+	let tracks = stream.getTracks();
+	tracks.forEach(function(track){track.stop();});
+	video.srcObject = null;
+}
+</script>
+
 	  <div class="form_divs" id="Reason_div">
 		<i class="fas fa-question-circle" style="size:5px;position:absolute;margin: 15 10;"></i>
 		<input type="text" name="Reason" id="Reason" class="form_element" placeholder="Enter Reason " required />
@@ -203,6 +359,8 @@ input[type="number"] {-moz-appearance: textfield;}
 							card_write.innerHTML = nl+name+nl+registration+nl+branch+nl+hostel+nl+contact;
 							img.src="/static/student/"+data.student.regn_no+".jpg"
 							card.style.opacity = .99;
+							document.getElementById('Info_box').style.display = "none";
+							document.getElementById('V_Card').style.display = "flex";
 						}
 						else{
 							if (data.hasOwnProperty('error_message')){

@@ -163,7 +163,7 @@ background-image: -webkit-linear-gradient(45deg,lightblue,#6c7ae0,lightblue,#6c7
 <script src="{% static 'entry_exit/qrdecode.js' %}"></script>
 <form id="myform" class="form_class" action="" method="POST" onsubmit="return submit_func()" enctype="application/x-www-form-urlencoded">
 	{% csrf_token %}
-	<div id="Logout_div" style="width:60%;margin-top:5px;margin-left:25%;margin-bottom:10px;">
+	<div id="Top_Row_div" style="width:60%;margin-top:5px;margin-left:25%;margin-bottom:10px;">
 		<i class="fas fa-sign-out-alt" style="size:5px;position:absolute;margin: 15 10;"></i>
 		<input class="form_element" type="button" onclick="logout_func()" value=" Logout"style="margin-right:10px;">
 		<input class="form_element" type="button" onclick="InfoBox()" value="Students Outside the campus List">
@@ -242,16 +242,21 @@ background-image: -webkit-linear-gradient(45deg,lightblue,#6c7ae0,lightblue,#6c7
 	  <div class="form_divs" id="Regn_No_div" style="display:block;">
 			<i class="fas fa-id-card-alt" style="position:absolute;margin: 15 10;"></i>
 			<input type="number" class="form_element" name="Regn_No" id="Regn_No" required placeholder="Registration Number" autocomple="off" style="order:2;">
-			<label class="qrcode-text-btn" style="background:url('{% static 'entry_exit/qr_icon.svg' %}') 50% 50% no-repeat;position:absolute;width:25px;height:25px;margin-left:-35px" onclick="openQRCamera()"></label> 
+			<label class="qrcode-text-btn" style="background:url('{% static 'entry_exit/qr_icon.svg' %}') 50% 50% no-repeat;position:absolute;width:25px;height:25px;margin-left:-35px"
+			onclick="openQRCamera();QrDecoder();"></label> 
 		<input type="button" style="order:4;" class="form_element" id="mybutton" onclick="verify()" value="Verify">
 	  </div>
 	<div class="modal">
 		<div class="modal-content">
 			<span class="close-button">×</span>
-			<div id="camera_div" class="">
-			<video class="display_class"></video>
-			<canvas class="display_class"></canvas>
+			
+			<div id="camera_div">
+			<div id="Box_div" style="border:thick red;border-style:solid dotted;margin-left:250px;margin-top:50px;width:260px;height:260px;position:absolute;"></div>
+			<video class="display_class" >
+			</video>
+			<canvas class="display_class" width="1000" height="800"></canvas>
 			<button id="button" onclick="click_func()">Take Snap!</button>
+			
 		</div>
 		</div>
 	</div>
@@ -290,21 +295,24 @@ window.addEventListener("click", windowOnClick);
 	}
  	function click_func(){
 	  var temp = canvas.getContext("2d");
-	  canvas.style.display = 'block';
-	  video.style.display = 'none';
-	  video.pause();
+	  //canvas.style.display = 'block';
+	  //video.style.display = 'none';
+	  //video.pause();
 	  temp.drawImage(video,0,0,canvas.width,canvas.height);
 	  //drawImage(img,sx,sy,swidth,sheight,x,y,width,height);
-	  video.display = 'none';
+	  //video.display = 'none';
 	  QrDecoder();
-	}
+	}	
+	var count =0;
 function QrDecoder() {
     qrcode.callback = function(res) {
       if(res instanceof Error) {
-        alert("No QR code found. Please make sure the QR code is within the camera's frame and try again.");
-		canvas.style.display = 'none';
-		video.style.display = "block";
-		video.play();
+		//canvas.style.display = 'none';
+		//video.style.display = "block";
+		//video.play();
+		console.log("fail " + count);
+		count=count+1;
+		setTimeout(click_func(),3000);
       }
 	  else {
 		document.getElementById('Regn_No').value = res;
