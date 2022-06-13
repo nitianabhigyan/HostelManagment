@@ -134,8 +134,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # custom settings
-MAIL_ID = "nitianabhigyan@gmail.com"
-MAIL_PASS = "kingcock"
+MAIL_ID = ""
+MAIL_PASS = ""
 MIN_REGN_NO = 2012103001
 LIST_OF_HOSTELS = ('Japfu','Japfu'),('Patkai-A','Patkai-A'),('Patkai-B','Patkai-B'),('Patkai-C','Patkai-C'),('Tiyi','Tiyi'),('Duzukou','Duzukou'),('Zanibu','Zanibu'),('Saramati-A','Saramati-A'),('Saramati-B','Saramati-B'),('Saramati-C','Saramati-C'),('New-Hostel','New-Hostel')
 WEB_URL = "http://10.14.72.163:1010/"
